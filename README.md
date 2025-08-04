@@ -9,7 +9,7 @@
 
 * Spring Boot에 바로 적용 가능한 통신 인터페이스 제공
 
-* DTO(Data Transfer Object) 클래스 관련 직렬화 지원
+* DTO(Data Transfer Object) 클래스 관련 직렬화/역직렬화 지원
 
   
 
