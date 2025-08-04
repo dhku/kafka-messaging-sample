@@ -1,0 +1,60 @@
+//부모 GRADLE
+//전체 빌드 : gradlew.bat clean build
+//개별 빌드 : gradlew.bat clean :ssok-bank:build
+
+plugins {
+    id 'java'
+    alias(libs.plugins.dependencyManagement) apply false
+}
+
+allprojects {
+    group = 'kr.ssok'
+    version = '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+tasks.register('cleanTarget', Delete) {
+    delete fileTree("${rootProject.projectDir}/target").include("*.jar")
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+    
+    test {
+        enabled = false // skipTests=true와 동일
+    }
+
+    // 공통 의존성
+    dependencies {
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
+    }
+
+    // 각 하위 모듈의 JAR 파일을 루트 프로젝트의 target 디렉토리에 복사
+    tasks.register('moveJarToTarget', Copy) {
+        dependsOn cleanTarget
+
+        def targetDir = "${rootProject.projectDir}/target"
+        def jarName = project.name + ".jar"
+
+        from layout.buildDirectory.dir('libs')
+        into targetDir
+        include "${project.name}-${version}.jar"
+        rename { String fileName -> jarName }
+    }
+
+    build.finalizedBy(moveJarToTarget)
+}

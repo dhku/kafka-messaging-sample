@@ -1,0 +1,44 @@
+rootProject.name = 'ssok-sandbox'
+
+//전체 빌드시 추가할 모듈을 이곳에 명시 할 것
+include 'kafka-messaging-common'
+include 'kafka-messaging-client'
+include 'kafka-messaging-server'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            // 버전 정의
+            version('springBoot', '3.4.4')
+            version('springDependencyManagement', '1.1.7')
+            version('gson', '2.7')
+            version('jwt', '0.12.6')
+            version('springCloud', '2024.0.0')
+            version('swagger', '2.3.0')
+            version('lombok', '1.18.24')
+            
+            // 플러그인 정의
+            plugin('springBoot', 'org.springframework.boot').versionRef('springBoot')
+            plugin('dependencyManagement', 'io.spring.dependency-management').versionRef('springDependencyManagement')
+            
+            // 라이브러리 정의
+            library('lombok', 'org.projectlombok', 'lombok').versionRef('lombok')
+            library('gson', 'com.google.code.gson', 'gson').versionRef('gson')
+
+            library('jwtApi', 'io.jsonwebtoken', 'jjwt-api').versionRef('jwt')
+            library('jwtImpl', 'io.jsonwebtoken', 'jjwt-impl').versionRef('jwt')
+            library('jwtJackson', 'io.jsonwebtoken', 'jjwt-jackson').versionRef('jwt')
+
+            library('springCloud', 'org.springframework.cloud', 'spring-cloud-dependencies').versionRef('springCloud')
+            library('swagger', 'org.springdoc', 'springdoc-openapi-starter-webmvc-ui').versionRef('swagger')
+
+            // 버전이 따로 표기되어 있지 않을때 사용
+            library('springBootWeb', 'org.springframework.boot', 'spring-boot-starter-web').withoutVersion()
+            library('springBootDevtools', 'org.springframework.boot', 'spring-boot-devtools').withoutVersion()
+            library('springBootTest', 'org.springframework.boot', 'spring-boot-starter-test').withoutVersion()
+
+        }
+    }
+}
+include 'kafka-messaging-common'
+
