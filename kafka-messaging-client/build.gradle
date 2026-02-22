@@ -14,7 +14,6 @@ dependencies {
     implementation project(':kafka-messaging-common')
 
     // Spring boot
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
@@ -23,9 +22,6 @@ dependencies {
 
     // Spring Cloud Dependencies
     implementation libs.springCloud
-
-    // mariadb
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // JWT
     implementation libs.jwtApi
